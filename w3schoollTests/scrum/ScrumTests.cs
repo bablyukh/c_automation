@@ -35,7 +35,7 @@ namespace w3schoollTests
             testPage.
                   chsooseAnswer().
                   clickNext();
-            Assert.AreEqual(testPage.GetQuestionNumberHeaderText(), "Question " + (currentQuestion + 1) + " of 30");
+            Assert.AreEqual("Question " + (currentQuestion + 1) + " of 30", testPage.GetQuestionNumberHeaderText());
         }
 
 
@@ -49,7 +49,7 @@ namespace w3schoollTests
             testPage.
                   chsooseAnswer().
                   clickPrevious();
-            Assert.AreEqual(testPage.GetQuestionNumberHeaderText(), "Question " + (currentQuestion - 1) + " of 30");
+            Assert.AreEqual("Question " + (currentQuestion - 1) + " of 30", testPage.GetQuestionNumberHeaderText());
         }
 
 

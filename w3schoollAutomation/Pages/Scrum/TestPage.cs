@@ -1,7 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
-
+using OpenQA.Selenium.Support.UI;
 
 namespace w3schoollAutomation.Pages
 {
@@ -17,17 +17,33 @@ namespace w3schoollAutomation.Pages
         }
 
 
+        public  DefaultWait<IWebDriver> fluentWait(){
+          DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(driver);
+            fluentWait.Timeout = TimeSpan.FromSeconds(5);
+            fluentWait.PollingInterval = TimeSpan.FromMilliseconds(250);
+            fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
+            fluentWait.Message = "Element to be searched not found";
+            return fluentWait;
+        }
+
+        public TestPage waitForContentReloaded(string oldQuestionId)
+        {
+            fluentWait().Until(x => !oldQuestionId.Equals(CurrentGuestionID));
+            return this;
+        }
 
         public TestPage clickNext()
         {
+            string id = CurrentGuestionID;
             this.NextButton.Click();
-            return this;
+            return waitForContentReloaded(id);
         }
 
         public TestPage clickPrevious()
         {
+            string id = CurrentGuestionID;
             this.PreviousButton.Click();
-            return this;
+            return waitForContentReloaded(id);
         }
 
         public string GetQuestionNumberHeaderText()
@@ -64,6 +80,15 @@ namespace w3schoollAutomation.Pages
             }
         }
 
+
+
+        private string CurrentGuestionID
+        {
+            get
+            {
+                return driver.FindElement(By.CssSelector("div.single_question_box>a")).GetAttribute("id");
+            }
+        }
 
 
         private IWebElement QuestionNumberHeader

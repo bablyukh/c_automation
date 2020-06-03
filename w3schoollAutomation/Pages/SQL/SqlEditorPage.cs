@@ -1,35 +1,33 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
 using w3schoollAutomation.Pages;
 using w3schoollAutomation.Pages.SQL;
 
 namespace w3schoollAutomation
 {
-    public class SqlEditorPage : W3SchoolsPage<SqlEditorPage>
+    public class SqlEditorPage : AbstarctPage<SqlEditorPage>
     {
         public bool isAt
         {
             get
             {
-                return Driver.Instance.Title.Equals("SQL Tryit Editor v1.6");
+                return driver.Title.Equals("SQL Tryit Editor v1.6");
             }
         }
 
         public SQLTutorialPage BackToTutorialsPage()
         {
-            Driver.Instance.Close();
-            Driver.Instance.SwitchTo().Window(Driver.Instance.WindowHandles[0]);
+            driver.Close();
+            driver.SwitchTo().Window(driver.WindowHandles[0]);
             return new SQLTutorialPage();
         }
 
         public Dictionary<string, string> GetQueryResults()
         {
-            Driver.Instance.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-            Driver.Instance.SwitchTo().Frame(Driver.Instance.FindElement(By.Id("iframeResultSQL")));
-            IWebElement queryResultDiv = Driver.Instance.FindElement(By.TagName("table"));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
+            driver.SwitchTo().Frame(driver.FindElement(By.Id("iframeResultSQL")));
+            IWebElement queryResultDiv = driver.FindElement(By.TagName("table"));
             var queryResults = new Dictionary<string, string>();
             var sElements = queryResultDiv.FindElements(By.TagName("tr"));
             var elementHEaders = queryResultDiv.FindElements(By.TagName("th"));
@@ -47,15 +45,15 @@ namespace w3schoollAutomation
                     queryResults.Add(keys[i], tdElements[i].Text);
                 }
             }
-            Driver.Instance.SwitchTo().DefaultContent();
+            driver.SwitchTo().DefaultContent();
 
             return queryResults;
         }
 
-        public override SqlEditorPage Init()
+        public override SqlEditorPage Init(IWebDriver _driver)
         {
-
-            Driver.Instance.Navigate().GoToUrl(Driver.BaseURL + "sql/trysql.asp?filename=trysql_select_all");
+            this.driver = _driver;
+            driver.Navigate().GoToUrl("https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all");
             return this;
         }
     }

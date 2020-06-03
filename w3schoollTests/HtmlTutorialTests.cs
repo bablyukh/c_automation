@@ -8,9 +8,10 @@ namespace w3schoollTests
     {
         private HTMLTutorialPage page = new HTMLTutorialPage();
 
-        public override void InitTestPage()
+        [SetUp]
+        public void InitTestPage()
         {
-            page.Init();
+            page.Init(driver);
         }
 
 

@@ -9,7 +9,8 @@ namespace w3schoollTests
     class SqlTutorialTests : BaseUITest
     {
         SQLTutorialPage page = new SQLTutorialPage();
-        public override void InitTestPage() => page.Init();
+        [SetUp]
+        public void InitTestPage() => page.Init(driver);
 
         //Test method
         [Test]

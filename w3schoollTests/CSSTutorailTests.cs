@@ -3,15 +3,15 @@ using w3schoollAutomation.Pages.CSS;
 
 namespace w3schoollTests
 {
-    [TestFixture]
+    //  [TestFixture]
     public class CSSTutorailTests : BaseUITest
     {
 
         private CSSTutorialPage page = new CSSTutorialPage();
-
-        public override void InitTestPage()
+        [SetUp] 
+        public void InitTestPage()
         {
-            page.Init();
+            page.Init(driver);
         }
 
         [Test]

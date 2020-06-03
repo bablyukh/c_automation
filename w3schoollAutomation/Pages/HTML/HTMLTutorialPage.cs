@@ -2,24 +2,25 @@ using OpenQA.Selenium;
 
 namespace w3schoollAutomation.Pages.HTML
 {
-    public class HTMLTutorialPage : W3SchoolsPage<HTMLTutorialPage>
+    public class HTMLTutorialPage : AbstarctPage<HTMLTutorialPage>
     {
-        public override HTMLTutorialPage Init()
+        public override HTMLTutorialPage Init(IWebDriver _driver)
         {
-            Driver.Instance.Navigate().GoToUrl(Driver.BaseURL + "html/default.asp");
+            this.driver = _driver;
+            driver.Navigate().GoToUrl("https://www.w3schools.com/html/default.asp");
             return this;
         }
 
         public HTMLTutorialPage ClickNext()
         {
-            Driver.Instance.FindElement(By.CssSelector("#main > div.nextprev > a.w3-right.w3-btn"))
+            driver.FindElement(By.CssSelector("#main > div.nextprev > a.w3-right.w3-btn"))
                 .Click();
             return this;
         }
 
         public HTMLTutorialPage ClickHome()
         {
-            Driver.Instance.FindElement(By.CssSelector("#main > div.nextprev > a.w3-left.w3-btn")).Click();
+            driver.FindElement(By.CssSelector("#main > div.nextprev > a.w3-left.w3-btn")).Click();
             return this;
         }
 
@@ -31,12 +32,12 @@ namespace w3schoollAutomation.Pages.HTML
 
         public string GetTitle()
         {
-            return Driver.Instance.Title;
+            return driver.Title;
         }
 
         public string GetPageHeader()
         {
-            return Driver.Instance.FindElement(By.CssSelector("#main > h1")).Text;
+            return driver.FindElement(By.CssSelector("#main > h1")).Text;
         }
 
 
